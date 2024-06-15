@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        #terminal {
+            width: 100%;
+            height: 70vh;
+            background-color: #212121;
+            color: #ffffff;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #input-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 10px;
+            background-color: #212121;
+        }
+        #input-and-button {
+            display: flex;
+            align-items: flex-end; /* Cambiado de column a row */
+        }
+        #input {
+            flex-grow: 1; /* Establece que el input debe ocupar todo el espacio disponible */
+            max-height: 50px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background-color: #303030;
+            color: #ffffff;
+        }
+        #submit {
+            max-height: 30px;
+            margin-left: 10px; /* Agregado margen izquierdo para separar el botón del input */
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+        }
+    </style>
+    
+    
+    
+    
+</head>
+<body>
+    <div id="terminal"></div>
+    <div id="input-container">
+        <input type="text" id="input" placeholder="Type a command...">
+        <!--button id="submit" onclick="sendCommand()">Submit</button-->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            addToTerminal('Connected to server');
+        });
+
+        socket.on('disconnect', function() {
+            addToTerminal('Disconnected from server');
+        });
+
+        socket.on('terminal_output', function(data) {
+            addToTerminal(data.data);
+        });
+
+        function sendCommand() {
+            var inputElement = $('#input');
+            var command = inputElement.val();
+            addToTerminal('>> ' + command);
+            socket.emit('terminal_input', {data: command});
+            inputElement.val('');
+        }
+
+        function addToTerminal(message) {
+            var terminalElement = $('#terminal');
+            var newLine = $('<div>').text(message);
+            terminalElement.append(newLine);
+            terminalElement.scrollTop(terminalElement[0].scrollHeight);
+        }
+
+        // Manejar el envío del formulario al presionar Enter
+        $('#input').keydown(function(event) {
+            if (event.keyCode === 13) { // Código de la tecla Enter
+                sendCommand();
+                event.preventDefault(); // Evitar el comportamiento predeterminado del Enter (como un salto de línea en el textarea)
+            }
+        });
+    </script>
+</body>
+</html>

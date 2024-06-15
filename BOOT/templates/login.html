@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-fz5QUhU1iR5u0iVVb5P4F9gx2L59O4rJ33i9Y5PLeb0y1Xcno6PksC5TIq78ZCQ" crossorigin="anonymous">
+    
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .automation-help {
+            font-family: 'Roboto', sans-serif;
+            font-size: 24px;
+            color: #4285F4;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        .google-logo {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h1 class="automation-help">Automation Help</h1>
+    <div class="logo-container">
+        <i class="fab fa-google google-logo"></i>
+    </div>
+    <form action="{{ url_for('login') }}" method="POST">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input type="text" name="email" id="form2Example1" class="form-control" />
+            <label class="form-label" for="form2Example1">Email address</label>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="password" id="form2Example2" class="form-control" />
+            <label class="form-label" for="form2Example2">Password</label>
+        </div>
+
+        <!-- Display error message -->
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+                <!-- Checkbox -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                    <label class="form-check-label" for="form2Example31"> Remember me </label>
+                </div>
+            </div>
+
+            <div class="col">
+                <!-- Simple link -->
+                <a href="#!">Forgot password?</a>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+    </form>
+
+    <!-- Register buttons -->
+    <div class="text-center">
+        <p>Not a member? <a href="#!">Register</a></p>
+    </div>
+</div>
+
+<!-- Bootstrap JS y Popper JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
